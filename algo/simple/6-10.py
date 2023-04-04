@@ -53,3 +53,31 @@ def nodeDepths(root):
         return depth + helper(node.left, depth + 1) + helper(node.right, depth + 1)
 
     return helper(root, 0)
+
+
+class Node:
+    def __init__(self, name):
+        self.children = []
+        self.name = name
+
+    def addChild(self, name):
+        self.children.append(Node(name))
+        return self
+
+    def depthFirstSearch(self, array):
+        # Write your code here.
+        array.append(self.name)
+        for child in self.children:
+            child.depthFirstSearch(array)
+        return array
+
+
+def minimumWaitingTime(queries):
+    # Write your code here.
+    queries = sorted(queries)
+    ans = 0
+    cur = 0
+    for i in range(1, len(queries)):
+        cur = cur + queries[i-1]
+        ans += cur
+    return ans
