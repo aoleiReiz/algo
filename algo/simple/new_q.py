@@ -35,3 +35,12 @@ def middleNode(linkedList):
         fast = fast.next.next
         slow = slow.next
     return slow
+
+
+def commonCharacters(strings):
+    s = set()
+    if strings:
+        s = set(strings[0])
+        for string in strings[1:]:
+            s = s.intersection(set(string))
+    return s
