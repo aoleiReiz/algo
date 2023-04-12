@@ -66,3 +66,45 @@ def moveElementToEnd(array, toMove):
             right -= 1
     return array
 
+
+def isMonotonic(array):
+    n = len(array)
+    if n <= 1:
+        return True
+    non_inc_flag  = True
+    non_dec_flag = True
+    for i in range(1, n):
+        if array[i] > array[i-1]:
+            non_inc_flag = False
+        elif array[i] < array[i - 1]:
+            non_dec_flag = False
+    return non_inc_flag or non_dec_flag
+
+
+def spiralTraverse(array):
+    # Write your code here.
+    if len(array) == 0:
+        return []
+    ans = []
+    row_start = 0
+    row_end = len(array) - 1
+    col_start = 0
+    col_end = len(array[0]) - 1
+    while row_start <= row_end and col_start <= col_end:
+        for c in range(col_start, col_end + 1):
+            ans.append(array[row_start][c])
+        row_start += 1
+        for r in range(row_start, row_end + 1):
+            ans.append(array[r][col_end])
+        col_end -= 1
+        if row_start > row_end:
+            break
+        for c in reversed(range(col_start, col_end + 1)):
+            ans.append(array[row_end][c])
+        row_end -= 1
+        if col_start > col_end:
+            break
+        for r in reversed(range(row_start, row_end + 1)):
+            ans.append(array[r][col_start])
+        col_start += 1
+    return ans
