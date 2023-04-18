@@ -45,6 +45,90 @@ def firstDuplicateValue(array):
             array[value - 1] *= -1
     return -1
 
+
+def mergeOverlappingIntervals(intervals):
+    # Write your code here.
+    if len(intervals) == 0:
+        return [[]]
+    intervals = sorted(intervals, key=lambda x: x[0])
+    ans = []
+    prev_interval = intervals[0]
+    for interval in intervals[1:]:
+        if interval[0] > prev_interval[1]:
+            ans.append(prev_interval)
+            prev_interval = interval
+        else:
+            prev_interval[1] = max(interval[1], prev_interval[1])
+    ans.append(prev_interval)
+    return ans
+
+
+class BST:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+
+    def insert(self, value):
+        # Write your code here.
+        # Do not edit the return statement of this method.
+        if value < self.value:
+            if self.left is None:
+                self.left = BST(value)
+            else:
+                self.left.insert(value)
+        else:
+            if self.right is None:
+                self.right = BST(value)
+            else:
+                self.right.insert(value)
+        return self
+
+    def contains(self, value):
+        # Write your code here.
+        if self.value == value:
+            return True
+        elif self.value > value:
+            return self.left.contains(value)
+        else:
+            return self.right.catains(value)
+
+    def remove(self, value, parent=None):
+        # Write your code here.
+        # Do not edit the return statement of this method.
+        if value < self.value:
+            if self.left is not None:
+                self.left.remove(value, self)
+        elif value > self.value:
+            if self.right is not None:
+                self.right.remove(value, self)
+        if self.left is not None and self.right is not None:
+            self.value = self.right.getMinValue()
+            self.right.remove(self.value, self)
+        elif parent is None:
+            if self.left is not None:
+                self.value = self.left.value
+                self.right = self.left.right
+                self.left = self.left.left
+            elif self.right is not None:
+                self.value = self.right.value
+                self.left = self.right.left
+                self.right = self.right.right
+            else:
+                pass
+        elif parent.left == self:
+            parent.left = self.left if self.left is not None else self.right
+        elif parent.right == self:
+            parent.right = self.left if self.left is not None else self.right
+        return self
+
+    def getMinValue(self):
+        if self.left is None:
+            return self.value
+        else:
+            return self.left.getMinValue()
+
+
 if __name__ == '__main__':
     arr = [1, 2, 3, 3, 4, 0, 10, 6, 5, -1, -3, 2, 3]
     print(longestPeak(arr))
