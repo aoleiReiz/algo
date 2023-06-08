@@ -44,3 +44,16 @@ def commonCharacters(strings):
         for string in strings[1:]:
             s = s.intersection(set(string))
     return s
+
+
+def transposeMatrix(matrix):
+    # Write your code here.
+    m = len(matrix)
+    if m == 0 or len(matrix[0]) == 0:
+        return []
+    n = len(matrix[0])
+    result = [[0 for _ in range(n)] for _ in range(m)]
+    for i in range(m):
+        for j in range(n):
+            result[j][i] = matrix[i][j]
+    return result
