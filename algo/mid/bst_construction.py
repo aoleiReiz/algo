@@ -38,17 +38,35 @@ class BST:
             else:
                 return self.right.contains(value)
 
-    def remove(self, value):
+    def remove(self, value, parent=None):
         # Write your code here.
         # Do not edit the return statement of this method.
         if value < self.value:
             if self.left is not None:
-                self.left.remove(value)
+                self.left.remove(value, self)
         elif value > self.value:
             if self.right is not None:
-                self.right.remove(value)
-
-
+                self.right.remove(value, self)
+        else:
+            if self.left is not None and self.right is not None:
+                self.value = self.right.min_value()
+                self.right.remove(self.value, self)
+            elif parent is None:
+                if self.left is not None:
+                    self.value = self.left.value
+                    self.right = self.left.right
+                    self.left = self.left.left
+                elif self.right is not None:
+                    self.value = self.right.value
+                    self.left = self.right.left
+                    self.right = self.right.right
+                else:
+                    pass
+            else:
+                if parent.left == self:
+                    parent.left = self.left if self.left is not None else self.right
+                elif parent.right == self:
+                    parent.right = self.right if self.right is not None else self.left
 
         return self
 
