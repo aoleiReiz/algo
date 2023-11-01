@@ -37,7 +37,7 @@ def staircaseTraversal(height, maxSteps):
             return memo[h]
         s = 0
         for idx in range(1, min(maxSteps, h) + 1):
-            s += helper(h - i)
+            s += helper(h - idx)
         memo[h] = s
         return s
 
