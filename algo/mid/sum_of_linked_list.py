@@ -31,3 +31,55 @@
 </pre>
 </div>
 """
+# This is an input class. Do not edit.
+
+
+class LinkedList:
+    def __init__(self, value):
+        self.value = value
+        self.next = None
+
+
+def sumOfLinkedLists(linkedListOne, linkedListTwo):
+    # Write your code here.
+    p_head = LinkedList(-1)
+    p = p_head
+    p1, p2 = linkedListOne, linkedListTwo
+    exceed_digit = 0
+    value = 0
+    while p1 or p2:
+        value = exceed_digit
+        if p1:
+            value += p1.value
+            p1 = p1.next
+        if p2:
+            value += p2.value
+            p2 = p2.next
+        exceed_digit = value // 10
+        value = value % 10
+        p.next = LinkedList(value)
+        p = p.next
+    if exceed_digit > 1:
+        p.next = LinkedList(exceed_digit)
+    return p_head.next
+
+
+l11 = LinkedList(2)
+l12 = LinkedList(4)
+l13 = LinkedList(7)
+l14 = LinkedList(1)
+l11.next = l12
+l12.next = l13
+l13.next = l14
+
+l21 = LinkedList(9)
+l22 = LinkedList(4)
+l23 = LinkedList(5)
+l21.next = l22
+l22.next = l23
+
+p = sumOfLinkedLists(l11, l21)
+while p:
+    print(p.value, end="=>")
+    p = p.next
+print("None")
